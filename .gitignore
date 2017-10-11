@@ -1,2 +1,4 @@
 node_modules
 .vs
+.gitignore
+package-lock.json

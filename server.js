@@ -41,7 +41,7 @@ client.on('connection', socket => {
             database: 'phone_book'
         })
         // console.log(data.user, data.number)
-        connection.query(`INSERT INTO numbers(person_id,number) VALUES(${data.user}, ${Number(data.number)})`)
+        connection.query(`INSERT INTO numbers(person_id,number) VALUES(${data.user}, ${Number(data.number)})`, (err, res) => console.log(res))
     })
     socket.on('insert_user', function(data) {
         const connection = mysql.createConnection({
