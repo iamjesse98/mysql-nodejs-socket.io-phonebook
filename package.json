@@ -1,0 +1,20 @@
+{
+  "name": "phonebook-app",
+  "version": "1.0.0",
+  "description": "a mysql node.js app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "mysql",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "jesse",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.15.0",
+    "socket.io": "^2.0.3"
+  }
+}
