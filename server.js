@@ -41,7 +41,7 @@ client.on('connection', socket => {
             database: 'phone_book'
         })
         // console.log(data.user, data.number)
-        connection.query(`INSERT INTO numbers(person_id,number) VALUES(${data.user}, ${Number(data.number)})`, (err, res) => console.log(res))
+        if(data.user >= 25)connection.query(`INSERT INTO numbers(person_id,number) VALUES(${data.user}, ${Number(data.number)})`, (err, res) => console.log(res))
     })
     socket.on('insert_user', function(data) {
         const connection = mysql.createConnection({
@@ -77,6 +77,33 @@ client.on('connection', socket => {
                     connection.query(`SELECT users.name FROM users WHERE id=${pid[0].person_id}`, (err, res) => {
                         // if(err) console.log('oh no!!')
                         socket.emit('result', res)
+                    })
+                })
+            }
+        })
+    })
+
+    socket.on('getnums', data => {
+        const connection = mysql.createConnection({
+            host: 'iamjesse',
+            user: 'jesse',
+            password: 'loveispatientandkind',
+            database: 'phone_book'
+        })
+        // console.log(data.target)
+        connection.query(`SELECT id FROM users WHERE name="${data.name}"`, (err, num) => {
+            // console.log()
+            if (Array.from(num).length === 0) {
+                socket.emit('numsre', [{ numbers: 'not found' }])
+            } else {
+                connection.query(`SELECT users.id FROM users WHERE name="${data.name}"`, (err, pid) => {
+                    // if(err) console.log('oh no!!')
+                    // console.log(pid[0].person_id)
+                    connection.query(`SELECT numbers.number FROM numbers WHERE person_id=${pid[0].id}`, (err, res) => {
+                        // if(err) console.log('oh no!!')
+                        // socket.emit('result', res)
+                        // console.log(res)
+                        socket.emit('numsre', [ { numbers: res } ])
                     })
                 })
             }
